@@ -21,7 +21,7 @@ export default function TaskCard({ task, onEdit, onDelete, onOpen }: TaskCardPro
     <Card
       variant="outlined"
       sx={{
-        borderRadius: 4,
+        borderRadius: 2,
         borderColor: 'rgba(15, 118, 110, 0.2)',
         backgroundColor: 'rgba(255, 250, 242, 0.9)',
       }}

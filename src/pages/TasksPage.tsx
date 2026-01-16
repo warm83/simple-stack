@@ -83,7 +83,7 @@ export default function TasksPage() {
           onChange={(_event, value) => value && setStatusFilter(value)}
           sx={{
             background: 'rgba(255, 250, 242, 0.9)',
-            borderRadius: 999,
+            borderRadius: 2,
             p: 0.5,
             border: '1px solid rgba(15, 118, 110, 0.2)',
             width: 'fit-content',
@@ -93,7 +93,7 @@ export default function TasksPage() {
             <ToggleButton
               key={value}
               value={value}
-              sx={{ border: 'none', px: 2.5, borderRadius: 999 }}
+              sx={{ border: 'none', px: 2.5, borderRadius: 2 }}
             >
               {label}
             </ToggleButton>

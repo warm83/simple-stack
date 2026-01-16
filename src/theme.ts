@@ -25,7 +25,7 @@ const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 16,
+    borderRadius: 2,
   },
   typography: {
     fontFamily: '"Dotum", "돋움", Arial, sans-serif',
@@ -54,7 +54,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'none',
-          borderRadius: 999,
+          borderRadius: 2,
           fontWeight: 600,
         },
       },

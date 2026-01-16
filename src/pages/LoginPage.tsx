@@ -24,7 +24,7 @@ export default function LoginPage() {
           p: 4,
           width: '100%',
           maxWidth: 420,
-          borderRadius: 4,
+          borderRadius: 2,
           border: '1px solid rgba(15, 118, 110, 0.2)',
           backgroundColor: 'rgba(255, 250, 242, 0.95)',
         }}

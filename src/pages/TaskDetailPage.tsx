@@ -54,7 +54,7 @@ export default function TaskDetailPage() {
           elevation={0}
           sx={{
             p: { xs: 3, md: 4 },
-            borderRadius: 4,
+            borderRadius: 2,
             border: '1px solid rgba(15, 118, 110, 0.2)',
             backgroundColor: 'rgba(255, 250, 242, 0.95)',
           }}
