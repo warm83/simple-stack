@@ -13,8 +13,7 @@ export default function LoginPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background:
-          'radial-gradient(circle at top, rgba(15, 118, 110, 0.2), transparent 50%), radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.2), transparent 45%)',
+        background: '#ffffff',
         p: 3,
       }}
     >
@@ -26,7 +25,7 @@ export default function LoginPage() {
           maxWidth: 420,
           borderRadius: 2,
           border: '1px solid rgba(15, 118, 110, 0.2)',
-          backgroundColor: 'rgba(255, 250, 242, 0.95)',
+          backgroundColor: '#ffffff',
         }}
       >
         <Stack spacing={2}>

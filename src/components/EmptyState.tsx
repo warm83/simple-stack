@@ -15,7 +15,7 @@ export default function EmptyState({ onAdd }: EmptyStateProps) {
         p: 4,
         borderRadius: 2,
         border: '1px dashed rgba(15, 118, 110, 0.25)',
-        background: 'rgba(255, 250, 242, 0.8)',
+        background: '#ffffff',
       }}
     >
       <Box display="flex" flexDirection="column" gap={1.5} alignItems="flex-start">

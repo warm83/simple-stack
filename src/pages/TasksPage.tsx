@@ -82,7 +82,7 @@ export default function TasksPage() {
           value={statusFilter}
           onChange={(_event, value) => value && setStatusFilter(value)}
           sx={{
-            background: 'rgba(255, 250, 242, 0.9)',
+            background: '#ffffff',
             borderRadius: 2,
             p: 0.5,
             border: '1px solid rgba(15, 118, 110, 0.2)',

@@ -23,7 +23,7 @@ export default function TaskCard({ task, onEdit, onDelete, onOpen }: TaskCardPro
       sx={{
         borderRadius: 2,
         borderColor: 'rgba(15, 118, 110, 0.2)',
-        backgroundColor: 'rgba(255, 250, 242, 0.9)',
+        backgroundColor: '#ffffff',
       }}
       onClick={() => onOpen(task.id)}
     >
