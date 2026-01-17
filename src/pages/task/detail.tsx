@@ -5,9 +5,9 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import AppLayout from '../layouts/AppLayout'
-import StatusChip from '../components/StatusChip'
-import { useTasks } from '../context/TasksContext'
+import AppLayout from '../../layouts/AppLayout'
+import StatusChip from '../../components/StatusChip'
+import { useTasks } from '../../context/TasksContext'
 
 const priorityLabels = {
   low: '低',

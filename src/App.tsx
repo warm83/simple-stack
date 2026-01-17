@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
-import TasksPage from './pages/TasksPage'
-import TaskDetailPage from './pages/TaskDetailPage'
-import LoginPage from './pages/LoginPage'
+import TasksPage from './pages/task/task'
+import TaskDetailPage from './pages/task/detail'
+import LoginPage from './pages/login/login'
 import { TasksProvider } from './context/TasksContext'
 
 export default function App() {
