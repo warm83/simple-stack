@@ -14,6 +14,7 @@ import TaskCard from '../../components/TaskCard'
 import type { Task, TaskInput, TaskStatus } from '../../types/task'
 import { useNavigate } from 'react-router-dom'
 import { useTasks } from '../../context/TasksContext'
+import { taskStyles } from './task.styles'
 
 const filterLabels: Record<TaskStatus | 'all', string> = {
   all: 'すべて',
@@ -81,19 +82,13 @@ export default function TasksPage() {
           exclusive
           value={statusFilter}
           onChange={(_event, value) => value && setStatusFilter(value)}
-          sx={{
-            background: '#ffffff',
-            borderRadius: 2,
-            p: 0.5,
-            border: '1px solid rgba(15, 118, 110, 0.2)',
-            width: 'fit-content',
-          }}
+          sx={taskStyles.filterGroup}
         >
           {Object.entries(filterLabels).map(([value, label]) => (
             <ToggleButton
               key={value}
               value={value}
-              sx={{ border: 'none', px: 2.5, borderRadius: 2 }}
+              sx={taskStyles.filterButton}
             >
               {label}
             </ToggleButton>

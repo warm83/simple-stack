@@ -4,29 +4,14 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import { loginStyles } from './login.styles'
 
 export default function LoginPage() {
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#ffffff',
-        p: 3,
-      }}
-    >
+    <Box sx={loginStyles.page}>
       <Paper
         elevation={0}
-        sx={{
-          p: 4,
-          width: '100%',
-          maxWidth: 420,
-          borderRadius: 2,
-          border: '1px solid rgba(15, 118, 110, 0.2)',
-          backgroundColor: '#ffffff',
-        }}
+        sx={loginStyles.card}
       >
         <Stack spacing={2}>
           <Typography variant="h4">スタディログイン</Typography>

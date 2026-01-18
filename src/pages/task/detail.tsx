@@ -8,6 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import AppLayout from '../../layouts/AppLayout'
 import StatusChip from '../../components/StatusChip'
 import { useTasks } from '../../context/TasksContext'
+import { detailStyles } from './detail.styles'
 
 const priorityLabels = {
   low: '低',
@@ -46,18 +47,13 @@ export default function TaskDetailPage() {
           variant="text"
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/')}
-          sx={{ alignSelf: 'flex-start' }}
+          sx={detailStyles.backButton}
         >
           一覧に戻る
         </Button>
         <Paper
           elevation={0}
-          sx={{
-            p: { xs: 3, md: 4 },
-            borderRadius: 2,
-            border: '1px solid rgba(15, 118, 110, 0.2)',
-            backgroundColor: '#ffffff',
-          }}
+          sx={detailStyles.card}
         >
           <Stack spacing={2}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems={{ xs: 'flex-start', sm: 'center' }}>
