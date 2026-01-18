@@ -19,9 +19,25 @@ const priorityLabels = {
 export default function TaskDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { tasks } = useTasks()
+  const { tasks, isLoading, error } = useTasks()
 
   const task = tasks.find((item) => item.id === id)
+
+  if (isLoading) {
+    return (
+      <AppLayout onAdd={() => navigate('/')}>
+        <Typography variant="h5">読み込み中...</Typography>
+      </AppLayout>
+    )
+  }
+
+  if (error) {
+    return (
+      <AppLayout onAdd={() => navigate('/')}>
+        <Typography variant="h5">読み込みに失敗しました。</Typography>
+      </AppLayout>
+    )
+  }
 
   if (!task) {
     return (

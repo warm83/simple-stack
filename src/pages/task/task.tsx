@@ -30,7 +30,7 @@ export default function TasksPage() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const navigate = useNavigate()
-  const { tasks, addTask, updateTask, removeTask } = useTasks()
+  const { tasks, isLoading, error, addTask, updateTask, removeTask } = useTasks()
 
   const filteredTasks = useMemo(() => {
     if (statusFilter === 'all') return tasks
@@ -95,7 +95,11 @@ export default function TasksPage() {
           ))}
         </ToggleButtonGroup>
 
-        {filteredTasks.length === 0 ? (
+        {isLoading ? (
+          <Typography variant="body1">読み込み中...</Typography>
+        ) : error ? (
+          <Typography variant="body1">読み込みに失敗しました。</Typography>
+        ) : filteredTasks.length === 0 ? (
           <EmptyState onAdd={handleOpenDialog} />
         ) : isMobile ? (
           <Stack spacing={2}>
