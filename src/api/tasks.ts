@@ -36,7 +36,7 @@ function mapTaskInputToApi(data: TaskInput) {
     status: data.status,
     priority: data.priority,
     assignee: data.assignee,
-    due_date: data.dueDate,
+    due_date: data.dueDate ? data.dueDate : null,
   }
 }
 
