@@ -13,6 +13,8 @@ React + TypeScript + MUI学習用CRUDプロジェクトです。チーム課題�
 - React + TypeScript (Vite)
 - MUI
 - React Router
+- Express (ローカルAPI)
+- Supabase
 
 ## 画面
 
@@ -20,13 +22,48 @@ React + TypeScript + MUI学習用CRUDプロジェクトです。チーム課題�
 - `/tasks/:id` 課題詳細
 - `/login` ログイン（UIのみ）
 
-## 使い方
+## セットアップ
 
 ```bash
 npm install
+```
+
+## 環境変数
+
+`.env` を作成して下記を設定してください。
+
+```bash
+VITE_API_BASE_URL=http://localhost:3001
+SUPABASE_URL=your_supabase_url
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+PORT=3001
+CORS_ORIGIN=http://localhost:5173
+```
+
+テンプレートは `.env.example` にあります。
+
+## 起動方法
+
+フロントエンド:
+
+```bash
 npm run dev
 ```
 
+ローカルAPI:
+
+```bash
+npm run dev:api
+```
+
+## API
+
+- `GET /tasks`
+- `GET /tasks/:id`
+- `POST /tasks`
+- `PUT /tasks/:id`
+- `DELETE /tasks/:id`
+
 ## メモ
 
-現時点ではデータはフロント側の状態で保持しています。API連携（例: Supabase）に切り替える前提の構成です。
+- APIのベースURLは `VITE_API_BASE_URL` で切り替え可能です。
