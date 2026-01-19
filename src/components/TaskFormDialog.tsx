@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
@@ -85,8 +85,14 @@ export default function TaskFormDialog({ open, onClose, onSubmit, task }: TaskFo
             multiline
             minRows={3}
           />
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+              gap: 2,
+            }}
+          >
+            <Box>
               <TextField
                 label="ステータス"
                 select
@@ -99,11 +105,11 @@ export default function TaskFormDialog({ open, onClose, onSubmit, task }: TaskFo
                 <MenuItem value="in_progress">進行中</MenuItem>
                 <MenuItem value="done">完了</MenuItem>
               </TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box>
               <PrioritySelect value={values.priority} onChange={handlePriorityChange} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box>
               <TextField
                 label="担当者"
                 value={values.assignee}
@@ -113,8 +119,8 @@ export default function TaskFormDialog({ open, onClose, onSubmit, task }: TaskFo
                 size="small"
                 required
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box>
               <TextField
                 label="期限"
                 type="date"
@@ -124,8 +130,8 @@ export default function TaskFormDialog({ open, onClose, onSubmit, task }: TaskFo
                 size="small"
                 InputLabelProps={{ shrink: true }}
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Stack>
       </DialogContent>
       <DialogActions sx={{ p: 3 }}>
