@@ -1,18 +1,8 @@
 import type { ReactNode } from 'react'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { Task, TaskInput } from '../types/task'
 import { createTask, deleteTask, fetchTasks, updateTask as updateTaskApi } from '../api/tasks'
-
-type TasksContextValue = {
-  tasks: Task[]
-  isLoading: boolean
-  error: string | null
-  addTask: (data: TaskInput) => Promise<void>
-  updateTask: (taskId: string, data: TaskInput) => Promise<void>
-  removeTask: (taskId: string) => Promise<void>
-}
-
-const TasksContext = createContext<TasksContextValue | null>(null)
+import { TasksContext, type TasksContextValue } from './TasksContext'
 
 export function TasksProvider({ children }: { children: ReactNode }) {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -51,15 +41,15 @@ export function TasksProvider({ children }: { children: ReactNode }) {
       tasks,
       isLoading,
       error,
-      addTask: async (data) => {
+      addTask: async (data: TaskInput) => {
         const created = await createTask(data)
         setTasks((prev) => [created, ...prev])
       },
-      updateTask: async (taskId, data) => {
+      updateTask: async (taskId: string, data: TaskInput) => {
         const updated = await updateTaskApi(taskId, data)
         setTasks((prev) => prev.map((task) => (task.id === taskId ? updated : task)))
       },
-      removeTask: async (taskId) => {
+      removeTask: async (taskId: string) => {
         await deleteTask(taskId)
         setTasks((prev) => prev.filter((task) => task.id !== taskId))
       },
@@ -68,11 +58,4 @@ export function TasksProvider({ children }: { children: ReactNode }) {
   )
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>
-}
-export function useTasks() {
-  const context = useContext(TasksContext)
-  if (!context) {
-    throw new Error('useTasks must be used within TasksProvider')
-  }
-  return context
 }

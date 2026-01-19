@@ -13,7 +13,7 @@ import TaskTable from '../../components/TaskTable'
 import TaskCard from '../../components/TaskCard'
 import type { Task, TaskInput, TaskStatus } from '../../types/task'
 import { useNavigate } from 'react-router-dom'
-import { useTasks } from '../../context/TasksContext'
+import { useTasks } from '../../context/useTasks'
 import { taskStyles } from './task.styles'
 
 const filterLabels: Record<TaskStatus | 'all', string> = {

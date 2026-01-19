@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import AppLayout from '../../layouts/AppLayout'
 import StatusChip from '../../components/StatusChip'
-import { useTasks } from '../../context/TasksContext'
+import { useTasks } from '../../context/useTasks'
 import { detailStyles } from './detail.styles'
 
 const priorityLabels = {
