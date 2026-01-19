@@ -63,7 +63,3 @@ yarn dev:api
 - `POST /tasks`
 - `PUT /tasks/:id`
 - `DELETE /tasks/:id`
-
-## メモ
-
-- APIのベースURLは `VITE_API_BASE_URL` で切り替え可能です。
