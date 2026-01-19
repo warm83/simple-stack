@@ -25,7 +25,7 @@ React + TypeScript + MUI学習用CRUDプロジェクトです。チーム課題�
 ## セットアップ
 
 ```bash
-npm install
+yarn install
 ```
 
 ## 環境変数
@@ -47,13 +47,13 @@ CORS_ORIGIN=http://localhost:5173
 フロントエンド:
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 ローカルAPI:
 
 ```bash
-npm run dev:api
+yarn dev:api
 ```
 
 ## API
