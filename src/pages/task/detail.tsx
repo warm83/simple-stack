@@ -82,7 +82,7 @@ export default function TaskDetailPage() {
             <Stack direction="row" spacing={1} flexWrap="wrap">
               <Chip label={`担当: ${task.assignee}`} variant="outlined" />
               <Chip label={`優先度: ${priorityLabels[task.priority]}`} variant="outlined" />
-              <Chip label={`期限: ${task.dueDate}`} variant="outlined" />
+              <Chip label={`期限: ${task.dueDate ?? ''}`} variant="outlined" />
             </Stack>
           </Stack>
         </Paper>
