@@ -15,3 +15,8 @@ labels: ["learning", "curriculum"]
 ## 理解ポイント
 - defaultValuesとtaskの分岐
 - バリデーションとonSubmitの流れ
+
+## 確認すべきポイント
+- 入力値はどのstateで管理されているか
+- 必須項目がどれか
+- 編集時に初期値がどうセットされるか

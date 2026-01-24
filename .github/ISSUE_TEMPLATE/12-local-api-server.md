@@ -15,3 +15,8 @@ labels: ["learning", "curriculum"]
 ## 理解ポイント
 - RESTエンドポイント構成
 - 環境変数とCORS設定
+
+## 確認すべきポイント
+- APIのベースURLがどこで設定されるか
+- 環境変数が足りないとどうなるか
+- GET/POST/PUT/DELETEの役割の違い

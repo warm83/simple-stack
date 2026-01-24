@@ -15,3 +15,8 @@ labels: ["learning", "curriculum"]
 ## 理解ポイント
 - ThemeProviderで適用される値
 - グローバルCSSが影響する要素
+
+## 確認すべきポイント
+- ThemeProviderがMUIコンポーネントに効く範囲
+- palette/typographyのどれが実際の画面に反映されているか
+- index.cssのリセットや全体影響の有無

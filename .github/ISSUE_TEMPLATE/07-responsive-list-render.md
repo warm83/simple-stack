@@ -15,3 +15,8 @@ labels: ["learning", "curriculum"]
 ## 理解ポイント
 - useMediaQueryの適用位置
 - TaskTable/TaskCardの役割の違い
+
+## 確認すべきポイント
+- useMediaQueryのブレークポイント
+- モバイルでカード/デスクトップでテーブルになる条件
+- クリック操作がどこで処理されるか

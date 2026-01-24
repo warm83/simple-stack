@@ -17,3 +17,8 @@ labels: ["learning", "curriculum"]
 ## 理解ポイント
 - fetch → state更新の流れ
 - add/update/removeがAPIにつながる仕組み
+
+## 確認すべきポイント
+- fetchTasksの呼び出しタイミング
+- 失敗時にerrorがどこで表示されるか
+- 追加/更新/削除後に画面がどう変わるか

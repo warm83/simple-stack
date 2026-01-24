@@ -14,3 +14,8 @@ labels: ["learning", "curriculum"]
 ## 理解ポイント
 - メッセージ/CTA構成
 - onAddイベント接続
+
+## 確認すべきポイント
+- EmptyStateが表示される条件
+- CTAがどの操作につながるか
+- 文言がユーザーに何を促しているか

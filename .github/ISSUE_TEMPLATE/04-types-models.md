@@ -14,3 +14,8 @@ labels: ["learning", "curriculum"]
 ## 理解ポイント
 - TaskとTaskInputの違い
 - status/priorityのユニオン型
+
+## 確認すべきポイント
+- TaskInputに`id`がない理由
+- status/priorityの取りうる値
+- 型の変更がどのファイルに影響するか

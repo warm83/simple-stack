@@ -15,3 +15,8 @@ labels: ["learning", "curriculum"]
 ## 理解ポイント
 - childrenの受け渡し
 - onAddイベントの流れ
+
+## 確認すべきポイント
+- AppLayoutが全ページに適用されるか
+- TopBarの`onAdd`がどの画面で使われるか
+- Containerの余白が画面幅でどう変わるか

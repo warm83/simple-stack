@@ -15,3 +15,8 @@ labels: ["learning", "curriculum"]
 ## 理解ポイント
 - StrictMode/ThemeProvider/BrowserRouterの適用順
 - Route構成とページの対応関係
+
+## 確認すべきポイント
+- index.htmlの`#root`がどこで使われるか
+- StrictModeが開発時のみに影響すること
+- Routes/Routeのネスト有無

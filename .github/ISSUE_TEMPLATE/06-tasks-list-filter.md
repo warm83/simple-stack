@@ -15,3 +15,8 @@ labels: ["learning", "curriculum"]
 ## 理解ポイント
 - statusFilterとuseMemo
 - dialogOpen/editingTaskの流れ
+
+## 確認すべきポイント
+- フィルタがUIと状態でどうつながっているか
+- Dialogの開閉がどの状態で管理されているか
+- 追加と編集で使うデータの違い
