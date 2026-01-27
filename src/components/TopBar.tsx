@@ -10,6 +10,8 @@ type TopBarProps = {
 }
 
 export default function TopBar({ onAdd }: TopBarProps) {
+  const location = useLocation()  
+  const isDetailPage = location.pathname.startsWith('/tasks/')
   return (
     <AppBar
       position="sticky"
@@ -24,13 +26,13 @@ export default function TopBar({ onAdd }: TopBarProps) {
     >
       <Toolbar sx={{ py: 1 }}>
         <Box sx={{ flexGrow: 1 }} />
-        {!useLocation().pathname.startsWith("/tasks/") &&
-          (<Box>
+        {!isDetailPage ? (
+          <Box>
             <Button variant="contained" startIcon={<AddIcon />} onClick={onAdd}>
               新しい課題
             </Button>
-          </Box>)
-        }
+          </Box>
+        ) : null}
       </Toolbar>
     </AppBar>
   )
