@@ -56,6 +56,22 @@ yarn dev
 yarn dev:api
 ```
 
+## Vercelデプロイ
+
+- VercelにGitHubリポジトリを接続し、`yarn build`でビルドします。
+- APIはVercel Functionsとして`/api`配下で動きます（`api/index.ts`）。
+
+### Vercelの環境変数
+
+```
+VITE_API_BASE_URL=/api
+SUPABASE_URL=your_supabase_url
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+CORS_ORIGIN=https://<your-vercel-domain>
+```
+
+`VITE_API_BASE_URL` を未設定の場合、プロダクションでは `/api` を自動で使用します。
+
 ## API
 
 - `GET /tasks`
