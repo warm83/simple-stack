@@ -15,6 +15,7 @@ import type { Task, TaskInput, TaskStatus } from '../../types/task'
 import { useNavigate } from 'react-router-dom'
 import { useTasks } from '../../context/useTasks'
 import { taskStyles } from './task.styles'
+import DeleteDialog from '../../components/DeleteDialog'
 
 const filterLabels: Record<TaskStatus | 'all', string> = {
   all: 'すべて',
@@ -27,6 +28,8 @@ export default function TasksPage() {
   const [statusFilter, setStatusFilter] = useState<TaskStatus | 'all'>('all')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingTask, setEditingTask] = useState<Task | null>(null)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const navigate = useNavigate()
@@ -63,10 +66,21 @@ export default function TasksPage() {
 
   const handleDelete = (taskId: string) => {
     removeTask(taskId)
+    handleCloseDeleteDialog()
   }
 
   const handleOpenDetail = (taskId: string) => {
     navigate(`/tasks/${taskId}`)
+  }
+
+  const handleOpenDeleteDialog = (taskId: string) => {
+    setSelectedTask(tasks.find((task) => task.id === taskId) || null)
+    setDeleteDialogOpen(true)
+  }
+
+  const handleCloseDeleteDialog = () => {
+    setDeleteDialogOpen(false)
+    setSelectedTask(null)
   }
 
   return (
@@ -108,13 +122,13 @@ export default function TasksPage() {
                 key={task.id}
                 task={task}
                 onEdit={handleEdit}
-                onDelete={handleDelete}
+                onDelete={handleOpenDeleteDialog}
                 onOpen={handleOpenDetail}
               />
             ))}
           </Stack>
         ) : (
-          <TaskTable tasks={filteredTasks} onEdit={handleEdit} onDelete={handleDelete} onOpen={handleOpenDetail} />
+          <TaskTable tasks={filteredTasks} onEdit={handleEdit} onDelete={handleOpenDeleteDialog} onOpen={handleOpenDetail} />
         )}
       </Stack>
       <TaskFormDialog
@@ -123,6 +137,13 @@ export default function TasksPage() {
         onSubmit={handleSubmit}
         task={editingTask}
       />
+      <DeleteDialog
+        open={deleteDialogOpen}
+        task={selectedTask}
+        onClose={handleCloseDeleteDialog}
+        onDelete={handleDelete}
+      />
+      
     </AppLayout>
   )
 }
