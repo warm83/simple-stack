@@ -1,10 +1,10 @@
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Typography from "@mui/material/Typography";
-import type { Task } from "../types/task";
+import Button from "@mui/material/Button"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogTitle from "@mui/material/DialogTitle"
+import Typography from "@mui/material/Typography"
+import type { Task } from "../types/task"
 
 type DeleteDialogProps = {
     open: boolean

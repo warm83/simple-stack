@@ -1,12 +1,12 @@
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import { useTheme } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useNavigate } from 'react-router-dom'
 
 const menuItems = [
   { title: "タスク一覧", url: "/" },

@@ -74,7 +74,9 @@ export default function TasksPage() {
   }
 
   const handleOpenDeleteDialog = (taskId: string) => {
-    setSelectedTask(tasks.find((task) => task.id === taskId) || null)
+    const task = tasks.find((item) => item.id === taskId)
+    if (!task) return
+    setSelectedTask(task)
     setDeleteDialogOpen(true)
   }
 
