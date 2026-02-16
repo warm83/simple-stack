@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import { useNavigate } from "react-router-dom"
+import Typography from "@mui/material/Typography"
+import Button from "@mui/material/Button"
+import Stack from "@mui/material/Stack"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import Box from "@mui/material/Box";
-import { notFoundStyles } from "./not-found.styles";
+import Box from "@mui/material/Box"
+import { notFoundStyles } from "./not-found.styles"
 
 export default function NotFoundPage(){
     const navigate = useNavigate()
