@@ -1,13 +1,15 @@
 import type { ReactNode } from 'react'
-import { useEffect, useMemo, useState } from 'react'
-import type { Task, TaskInput } from '../types/task'
+import { useEffect, useMemo } from 'react'
+import { useAtom } from 'jotai'
+import type { TaskInput } from '../types/task'
 import { createTask, deleteTask, fetchTasks, updateTask as updateTaskApi } from '../api/tasks'
 import { TasksContext, type TasksContextValue } from './TasksContext'
+import { tasksAtom, tasksErrorAtom, tasksLoadingAtom } from './tasksAtoms'
 
 export function TasksProvider({ children }: { children: ReactNode }) {
-  const [tasks, setTasks] = useState<Task[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [tasks, setTasks] = useAtom(tasksAtom)
+  const [isLoading, setIsLoading] = useAtom(tasksLoadingAtom)
+  const [error, setError] = useAtom(tasksErrorAtom)
 
   useEffect(() => {
     let isMounted = true
@@ -34,7 +36,7 @@ export function TasksProvider({ children }: { children: ReactNode }) {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [setTasks, setError, setIsLoading])
 
   const value = useMemo<TasksContextValue>(
     () => ({
@@ -54,7 +56,7 @@ export function TasksProvider({ children }: { children: ReactNode }) {
         setTasks((prev) => prev.filter((task) => task.id !== taskId))
       },
     }),
-    [tasks, isLoading, error],
+    [tasks, isLoading, error, setTasks],
   )
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>
