@@ -1,5 +1,5 @@
 import type { ChangeEvent } from 'react'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -28,17 +28,24 @@ const defaultValues: TaskInput = {
   dueDate: '',
 }
 
-export default function TaskFormDialog({ open, onClose, onSubmit, task }: TaskFormDialogProps) {
-  const [values, setValues] = useState<TaskInput>(defaultValues)
+function toTaskInput(task?: Task | null): TaskInput {
+  if (!task) return defaultValues
+  return {
+    title: task.title,
+    description: task.description,
+    status: task.status,
+    priority: task.priority,
+    assignee: task.assignee,
+    dueDate: task.dueDate,
+  }
+}
 
-  useEffect(() => {
-    if (task) {
-      const { id: _id, ...rest } = task
-      setValues(rest)
-      return
-    }
-    setValues(defaultValues)
-  }, [task, open])
+function TaskFormFields({
+  task,
+  onClose,
+  onSubmit,
+}: Pick<TaskFormDialogProps, 'task' | 'onClose' | 'onSubmit'>) {
+  const [values, setValues] = useState<TaskInput>(() => toTaskInput(task))
 
   const isEdit = Boolean(task)
 
@@ -64,7 +71,7 @@ export default function TaskFormDialog({ open, onClose, onSubmit, task }: TaskFo
   }
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+    <>
       <DialogTitle>{isEdit ? '課題を編集' : '新しい課題を追加'}</DialogTitle>
       <DialogContent>
         <Stack spacing={2} sx={{ mt: 1 }}>
@@ -140,6 +147,16 @@ export default function TaskFormDialog({ open, onClose, onSubmit, task }: TaskFo
           {isEdit ? '変更を保存' : '追加'}
         </Button>
       </DialogActions>
+    </>
+  )
+}
+
+export default function TaskFormDialog({ open, onClose, onSubmit, task }: TaskFormDialogProps) {
+  const formKey = `${task?.id ?? 'new'}-${open ? 'open' : 'closed'}`
+
+  return (
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+      <TaskFormFields key={formKey} task={task} onClose={onClose} onSubmit={onSubmit} />
     </Dialog>
   )
 }
