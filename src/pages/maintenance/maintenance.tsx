@@ -15,7 +15,7 @@ export default function MaintenancePage() {
             <Stack spacing={2}
                 alignItems="center"
                 sx={{ textAlign: 'center' }}>
-                <Typography variant="h3" sx={{}} >只今メンテナンス中です</Typography>
+                <Typography variant="h3">只今メンテナンス中です</Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: 'pre-wrap', }}>
                     {`しばらく経ってから再度アクセスしてください。\nご理解とご協力ありがとうございます。`}
                 </Typography>
