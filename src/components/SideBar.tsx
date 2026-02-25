@@ -6,17 +6,17 @@ import ListItemText from '@mui/material/ListItemText'
 import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 
 const menuItems = [
-  { title: "タスク一覧", url: "/" },
-  { title: "ログイン", url: "/login" }
+  { title: 'タスク一覧', url: '/' },
+  { title: 'ログイン', url: '/login' },
 ]
 
 export default function SideBar() {
   const width = 220
 
-  const navigate = useNavigate();
+  const router = useRouter()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
@@ -39,7 +39,7 @@ export default function SideBar() {
       <List>
         {menuItems.map((item) => (
           <ListItem key={item.title} disablePadding>
-            <ListItemButton onClick={() => navigate(item.url)}>
+            <ListItemButton onClick={() => router.push(item.url)}>
               <ListItemText primary={item.title} />
             </ListItemButton>
           </ListItem>

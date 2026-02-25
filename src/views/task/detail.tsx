@@ -1,4 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom'
+'use client'
+
+import { useRouter } from 'next/navigation'
 import Button from '@mui/material/Button'
 import Chip from '@mui/material/Chip'
 import Paper from '@mui/material/Paper'
@@ -16,16 +18,19 @@ const priorityLabels = {
   high: '高',
 }
 
-export default function TaskDetailPage() {
-  const { id } = useParams()
-  const navigate = useNavigate()
+type TaskDetailPageProps = {
+  taskId: string
+}
+
+export default function TaskDetailPage({ taskId }: TaskDetailPageProps) {
+  const router = useRouter()
   const { tasks, isLoading, error } = useTasks()
 
-  const task = tasks.find((item) => item.id === id)
+  const task = tasks.find((item) => item.id === taskId)
 
   if (isLoading) {
     return (
-      <AppLayout onAdd={() => navigate('/')}>
+      <AppLayout onAdd={() => router.push('/')}>
         <Typography variant="h5">読み込み中...</Typography>
       </AppLayout>
     )
@@ -33,7 +38,7 @@ export default function TaskDetailPage() {
 
   if (error) {
     return (
-      <AppLayout onAdd={() => navigate('/')}>
+      <AppLayout onAdd={() => router.push('/')}>
         <Typography variant="h5">読み込みに失敗しました。</Typography>
       </AppLayout>
     )
@@ -41,12 +46,12 @@ export default function TaskDetailPage() {
 
   if (!task) {
     return (
-      <AppLayout onAdd={() => navigate('/')}>
+      <AppLayout onAdd={() => router.push('/')}>
         <Stack spacing={2}>
           <Typography variant="h4">課題が見つかりません。</Typography>
           <Button
             variant="contained"
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             startIcon={<ArrowBackIcon />}
           >
             一覧に戻る
@@ -57,12 +62,12 @@ export default function TaskDetailPage() {
   }
 
   return (
-    <AppLayout onAdd={() => navigate('/')}>
+    <AppLayout onAdd={() => router.push('/')}>
       <Stack spacing={3}>
         <Button
           variant="text"
           startIcon={<ArrowBackIcon />}
-          onClick={() => navigate('/')}
+          onClick={() => router.push('/')}
           sx={detailStyles.backButton}
         >
           一覧に戻る

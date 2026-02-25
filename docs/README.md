@@ -1,8 +1,8 @@
 # 開発メモ
 
 ## 目的
-- タスク管理ボードのUI/UXとAPI連携の学習・検証
-- ローカルAPI + Supabase を使ったCRUDの確認
+- タスク管理ボードの UI/UX と API 連携の学習・検証
+- ローカル API + Supabase を使った CRUD の確認
 
 ## 環境
 - Node/Yarn: Node 20+ / Yarn 1.22.x
@@ -11,30 +11,16 @@
   - API: `yarn dev:api`
 
 ## 構成
-- フォルダ構成:
-  - `src/pages`: 画面
-  - `src/components`: UI部品
-  - `src/context`: 状態/データ取得
-  - `src/api`: APIクライアント
-  - `server`: ローカルAPI（Express）
-- 主要ファイル:
-  - `src/pages/task/task.tsx`: 一覧画面
-  - `src/pages/task/detail.tsx`: 詳細画面
-  - `src/context/TasksProvider.tsx`: 取得・CRUD
-  - `server/index.ts`: APIサーバー
+- `src/app`: Next.js App Router
+- `src/views`: 画面 UI コンポーネント本体
+- `src/components`: UI 部品
+- `src/context`: 状態/データ取得
+- `src/api`: API クライアント
+- `server`: ローカル API（Express）
 
-## 開発ルール
-- ブランチ/コミット規則:
-  - `feature/*`もしくは`issue_*` で進行
-  - コミットは日本語の短い要約
-- コードスタイル:
-  - TypeScript/React
-  - MUIの`sx`は各ページの`*.styles.ts`へ分離
-
-## 作業ログ
-- API連携（Supabase）を追加
-- ローカルAPIをTypeScript化
-
-## 参考リンク
-- Supabase: https://supabase.com/
-- MUI: https://mui.com/
+## 主要ファイル
+- `src/app/page.tsx`: 一覧画面ルート
+- `src/app/tasks/[id]/page.tsx`: 詳細画面ルート
+- `src/views/task/task.tsx`: 一覧画面 UI
+- `src/views/task/detail.tsx`: 詳細画面 UI
+- `server/index.ts`: API サーバー
