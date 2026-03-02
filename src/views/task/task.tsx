@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo, useState } from 'react'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
@@ -12,7 +14,7 @@ import TaskFormDialog from '../../components/TaskFormDialog'
 import TaskTable from '../../components/TaskTable'
 import TaskCard from '../../components/TaskCard'
 import type { Task, TaskInput, TaskStatus } from '../../types/task'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { useTasks } from '../../context/useTasks'
 import { taskStyles } from './task.styles'
 import DeleteDialog from '../../components/DeleteDialog'
@@ -32,7 +34,7 @@ export default function TasksPage() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const navigate = useNavigate()
+  const router = useRouter()
   const { tasks, isLoading, error, addTask, updateTask, removeTask } = useTasks()
 
   const filteredTasks = useMemo(() => {
@@ -70,7 +72,7 @@ export default function TasksPage() {
   }
 
   const handleOpenDetail = (taskId: string) => {
-    navigate(`/tasks/${taskId}`)
+    router.push(`/tasks/${taskId}`)
   }
 
   const handleOpenDeleteDialog = (taskId: string) => {

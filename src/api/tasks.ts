@@ -7,11 +7,12 @@ type ApiTask = {
   status: Task['status']
   priority: Task['priority']
   assignee: string
-  due_date: string
+  due_date: string | null
 }
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ?? (import.meta.env.PROD ? '/api' : '')
+  process.env.NEXT_PUBLIC_API_BASE_URL ??
+  '/api'
 
 function buildUrl(path: string) {
   if (!API_BASE_URL) return path
@@ -26,7 +27,7 @@ function mapApiToTask(task: ApiTask): Task {
     status: task.status,
     priority: task.priority,
     assignee: task.assignee,
-    dueDate: task.due_date,
+    dueDate: task.due_date ?? '',
   }
 }
 

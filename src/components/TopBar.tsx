@@ -3,15 +3,15 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Toolbar from '@mui/material/Toolbar'
 import AddIcon from '@mui/icons-material/Add'
-import { useLocation } from 'react-router-dom'
+import { usePathname } from 'next/navigation'
 
 type TopBarProps = {
   onAdd: () => void
 }
 
 export default function TopBar({ onAdd }: TopBarProps) {
-  const location = useLocation()  
-  const isDetailPage = location.pathname.startsWith('/tasks/')
+  const pathname = usePathname()
+  const isDetailPage = pathname.startsWith('/tasks/')
   return (
     <AppBar
       position="sticky"

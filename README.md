@@ -1,6 +1,6 @@
 # タスク管理ボード
 
-React + TypeScript + MUI学習用CRUDプロジェクトです。チーム課題を一覧・追加・編集・削除できるUIを用意しています。
+Next.js (App Router) + TypeScript + MUI 学習用 CRUD プロジェクトです。チーム課題を一覧・追加・編集・削除できる UI を用意しています。
 
 ## 主要機能
 
@@ -10,10 +10,10 @@ React + TypeScript + MUI学習用CRUDプロジェクトです。チーム課題�
 
 ## 技術スタック
 
-- React + TypeScript (Vite)
+- Next.js (App Router) + React + TypeScript
 - MUI
-- React Router
-- Express (ローカルAPI)
+- Jotai
+- Express (ローカル API)
 - Supabase
 
 ## 画面
@@ -33,11 +33,12 @@ yarn install
 `.env` を作成して下記を設定してください。
 
 ```bash
-VITE_API_BASE_URL=http://localhost:3001
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
 SUPABASE_URL=your_supabase_url
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 PORT=3001
-CORS_ORIGIN=http://localhost:5173
+CORS_ORIGIN=http://localhost:3000
+NEXT_PUBLIC_MAINTENANCE_MODE=false
 ```
 
 テンプレートは `.env.example` にあります。
@@ -56,22 +57,6 @@ yarn dev
 yarn dev:api
 ```
 
-## Vercelデプロイ
-
-- VercelにGitHubリポジトリを接続し、`yarn build`でビルドします。
-- APIはVercel Functionsとして`/api`配下で動きます（`api/index.ts`）。
-
-### Vercelの環境変数
-
-```
-VITE_API_BASE_URL=/api
-SUPABASE_URL=your_supabase_url
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-CORS_ORIGIN=https://<your-vercel-domain>
-```
-
-`VITE_API_BASE_URL` を未設定の場合、プロダクションでは `/api` を自動で使用します。
-
 ## API
 
 - `GET /tasks`
@@ -79,3 +64,5 @@ CORS_ORIGIN=https://<your-vercel-domain>
 - `POST /tasks`
 - `PUT /tasks/:id`
 - `DELETE /tasks/:id`
+
+`NEXT_PUBLIC_API_BASE_URL` を未設定の場合、プロダクションでは `/api` を自動で使用します。

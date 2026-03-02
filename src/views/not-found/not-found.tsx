@@ -1,4 +1,6 @@
-import { useNavigate } from "react-router-dom"
+'use client'
+
+import { useRouter } from 'next/navigation'
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
@@ -7,7 +9,7 @@ import Box from "@mui/material/Box"
 import { notFoundStyles } from "./not-found.styles"
 
 export default function NotFoundPage(){
-    const navigate = useNavigate()
+    const router = useRouter()
     return(
         <Box sx={notFoundStyles.page}>
         <Stack spacing={2} 
@@ -19,7 +21,7 @@ export default function NotFoundPage(){
             </Typography>
             <Button
             variant="contained"
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             startIcon={<ArrowBackIcon />}
             >
                 ホームへ戻る

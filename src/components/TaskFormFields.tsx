@@ -34,7 +34,7 @@ function toTaskInput(task?: Task | null): TaskInput {
     status: task.status,
     priority: task.priority,
     assignee: task.assignee,
-    dueDate: task.dueDate,
+    dueDate: task.dueDate ?? '',
   }
 }
 
