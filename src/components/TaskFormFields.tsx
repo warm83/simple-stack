@@ -38,7 +38,11 @@ function toTaskInput(task?: Task | null): TaskInput {
   }
 }
 
-export default function TaskFormFields({ task, onClose, onSubmit }: TaskFormFieldsProps) {
+export default function TaskFormFields({
+  task,
+  onClose,
+  onSubmit,
+}: TaskFormFieldsProps) {
   const [values, setValues] = useState<TaskInput>(() => toTaskInput(task))
 
   const isEdit = Boolean(task)
@@ -47,9 +51,10 @@ export default function TaskFormFields({ task, onClose, onSubmit }: TaskFormFiel
     return values.title.trim().length > 0 && values.assignee.trim().length > 0
   }, [values])
 
-  const handleChange = (field: keyof TaskInput) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues((prev) => ({ ...prev, [field]: event.target.value }))
-  }
+  const handleChange =
+    (field: keyof TaskInput) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues((prev) => ({ ...prev, [field]: event.target.value }))
+    }
 
   const handleStatusChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, status: event.target.value as TaskStatus }))
@@ -108,7 +113,10 @@ export default function TaskFormFields({ task, onClose, onSubmit }: TaskFormFiel
               </TextField>
             </Box>
             <Box>
-              <PrioritySelect value={values.priority} onChange={handlePriorityChange} />
+              <PrioritySelect
+                value={values.priority}
+                onChange={handlePriorityChange}
+              />
             </Box>
             <Box>
               <TextField

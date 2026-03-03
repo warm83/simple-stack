@@ -1,9 +1,9 @@
 export const notFoundStyles = {
-    page: {
+  page: {
     minHeight: '100vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     background: '#ffffff',
-  }
+  },
 }
