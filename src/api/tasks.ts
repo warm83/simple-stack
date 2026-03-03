@@ -10,9 +10,7 @@ type ApiTask = {
   due_date: string | null
 }
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ??
-  '/api'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '/api'
 
 function buildUrl(path: string) {
   if (!API_BASE_URL) return path

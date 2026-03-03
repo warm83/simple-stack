@@ -31,10 +31,13 @@ export default function SideBar() {
         height: '100vh',
         position: 'sticky',
         top: 0,
-      }}>
+      }}
+    >
       <Box sx={{ p: 2 }}>
         <Typography variant="h6">Simple Stack</Typography>
-        <Typography variant="body2" color="text.secondary">Task board</Typography>
+        <Typography variant="body2" color="text.secondary">
+          Task board
+        </Typography>
       </Box>
       <List>
         {menuItems.map((item) => (

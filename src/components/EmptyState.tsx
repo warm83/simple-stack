@@ -18,12 +18,19 @@ export default function EmptyState({ onAdd }: EmptyStateProps) {
         background: '#ffffff',
       }}
     >
-      <Box display="flex" flexDirection="column" gap={1.5} alignItems="flex-start">
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap={1.5}
+        alignItems="flex-start"
+      >
         <Typography variant="h5">最初の課題を作りませんか？</Typography>
         <Typography variant="body2" color="text.secondary">
           小さな目標から追加してボードを埋めましょう。
         </Typography>
-        <Button variant="contained" onClick={onAdd}>新しい課題を追加</Button>
+        <Button variant="contained" onClick={onAdd}>
+          新しい課題を追加
+        </Button>
       </Box>
     </Paper>
   )

@@ -16,7 +16,12 @@ type TaskCardProps = {
   onOpen: (taskId: string) => void
 }
 
-export default function TaskCard({ task, onEdit, onDelete, onOpen }: TaskCardProps) {
+export default function TaskCard({
+  task,
+  onEdit,
+  onDelete,
+  onOpen,
+}: TaskCardProps) {
   return (
     <Card
       variant="outlined"
@@ -29,7 +34,11 @@ export default function TaskCard({ task, onEdit, onDelete, onOpen }: TaskCardPro
     >
       <CardContent>
         <Stack spacing={1.5}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Typography variant="h6">{task.title}</Typography>
             <StatusChip status={task.status} />
           </Stack>
@@ -37,7 +46,11 @@ export default function TaskCard({ task, onEdit, onDelete, onOpen }: TaskCardPro
             {task.description}
           </Typography>
           <Divider />
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Typography variant="caption" color="text.secondary">
               担当: {task.assignee} · 期限: {task.dueDate}
             </Typography>

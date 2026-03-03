@@ -1,6 +1,11 @@
 import { atom } from 'jotai'
 import type { Task, TaskInput } from '../types/task'
-import { createTask, deleteTask, fetchTasks, updateTask as updateTaskApi } from '../api/tasks'
+import {
+  createTask,
+  deleteTask,
+  fetchTasks,
+  updateTask as updateTaskApi,
+} from '../api/tasks'
 
 export const tasksAtom = atom<Task[]>([])
 export const tasksLoadingAtom = atom(true)
@@ -19,7 +24,10 @@ export const loadTasksAtom = atom(null, async (get, set) => {
     set(tasksErrorAtom, null)
   } catch (err) {
     set(tasksInitializedAtom, false)
-    set(tasksErrorAtom, err instanceof Error ? err.message : 'Failed to load tasks')
+    set(
+      tasksErrorAtom,
+      err instanceof Error ? err.message : 'Failed to load tasks',
+    )
   } finally {
     set(tasksLoadingAtom, false)
   }
@@ -34,7 +42,9 @@ export const updateTaskAtom = atom(
   null,
   async (_get, set, params: { taskId: string; data: TaskInput }) => {
     const updated = await updateTaskApi(params.taskId, params.data)
-    set(tasksAtom, (prev) => prev.map((task) => (task.id === params.taskId ? updated : task)))
+    set(tasksAtom, (prev) =>
+      prev.map((task) => (task.id === params.taskId ? updated : task)),
+    )
   },
 )
 
