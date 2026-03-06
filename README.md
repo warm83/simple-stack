@@ -66,3 +66,13 @@ yarn dev:api
 - `DELETE /tasks/:id`
 
 `NEXT_PUBLIC_API_BASE_URL` を未設定の場合、プロダクションでは `/api` を自動で使用します。
+
+## Prettier
+
+```bash
+yarn install
+yarn format:check
+yarn format  
+```
+- `yarn format:check`: 変更せずにチェック
+- `yarn format`: 実際に適用
