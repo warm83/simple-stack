@@ -10,7 +10,10 @@ type PrioritySelectProps = {
   onChange: (value: TaskPriority) => void
 }
 
-export default function PrioritySelect({ value, onChange }: PrioritySelectProps) {
+export default function PrioritySelect({
+  value,
+  onChange,
+}: PrioritySelectProps) {
   const handleChange = (event: SelectChangeEvent) => {
     onChange(event.target.value as TaskPriority)
   }

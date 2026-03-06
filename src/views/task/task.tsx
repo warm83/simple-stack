@@ -35,7 +35,8 @@ export default function TasksPage() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const router = useRouter()
-  const { tasks, isLoading, error, addTask, updateTask, removeTask } = useTasks()
+  const { tasks, isLoading, error, addTask, updateTask, removeTask } =
+    useTasks()
 
   const filteredTasks = useMemo(() => {
     if (statusFilter === 'all') return tasks
@@ -132,7 +133,12 @@ export default function TasksPage() {
             ))}
           </Stack>
         ) : (
-          <TaskTable tasks={filteredTasks} onEdit={handleEdit} onDelete={handleOpenDeleteDialog} onOpen={handleOpenDetail} />
+          <TaskTable
+            tasks={filteredTasks}
+            onEdit={handleEdit}
+            onDelete={handleOpenDeleteDialog}
+            onOpen={handleOpenDetail}
+          />
         )}
       </Stack>
       <TaskFormDialog
@@ -147,7 +153,6 @@ export default function TasksPage() {
         onClose={handleCloseDeleteDialog}
         onDelete={handleDelete}
       />
-      
     </AppLayout>
   )
 }

@@ -72,12 +72,13 @@ export default function TaskDetailPage({ taskId }: TaskDetailPageProps) {
         >
           一覧に戻る
         </Button>
-        <Paper
-          elevation={0}
-          sx={detailStyles.card}
-        >
+        <Paper elevation={0} sx={detailStyles.card}>
           <Stack spacing={2}>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems={{ xs: 'flex-start', sm: 'center' }}>
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={2}
+              alignItems={{ xs: 'flex-start', sm: 'center' }}
+            >
               <Typography variant="h3">{task.title}</Typography>
               <StatusChip status={task.status} />
             </Stack>
@@ -86,7 +87,10 @@ export default function TaskDetailPage({ taskId }: TaskDetailPageProps) {
             </Typography>
             <Stack direction="row" spacing={1} flexWrap="wrap">
               <Chip label={`担当: ${task.assignee}`} variant="outlined" />
-              <Chip label={`優先度: ${priorityLabels[task.priority]}`} variant="outlined" />
+              <Chip
+                label={`優先度: ${priorityLabels[task.priority]}`}
+                variant="outlined"
+              />
               <Chip label={`期限: ${task.dueDate ?? ''}`} variant="outlined" />
             </Stack>
           </Stack>
