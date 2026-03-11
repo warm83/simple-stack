@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import ToggleButton from '@mui/material/ToggleButton'
@@ -47,11 +47,24 @@ export default function TasksPage() {
     return tasks.filter((task) => task.status === statusFilter)
   }, [statusFilter, tasks])
 
+    const totalPages = useMemo(
+    () => Math.max(1, Math.ceil(filteredTasks.length / PAGE_SIZE)),
+    [filteredTasks.length],
+  )
+  const safeCurrentPage = Math.min(currentPage, totalPages)
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages)
+    }
+  }, [currentPage, totalPages, setCurrentPage])
+
   const tasksPage = useMemo(() => {
-    const start = (currentPage - 1) * PAGE_SIZE
+    const start = (safeCurrentPage - 1) * PAGE_SIZE
     const end = start + PAGE_SIZE
     return filteredTasks.slice(start, end)
-  }, [filteredTasks, currentPage])
+  }, [filteredTasks, safeCurrentPage])
+
 
   const handleOpenDialog = () => {
     setEditingTask(null)
@@ -156,7 +169,7 @@ export default function TasksPage() {
         )}
         <Stack direction="row" justifyContent="flex-end">
           <Pagination
-            count={Math.ceil(filteredTasks.length / PAGE_SIZE)}
+            count={totalPages}
             page={currentPage}
             onChange={handlePage}
             color="primary"
