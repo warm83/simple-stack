@@ -47,7 +47,7 @@ export default function TasksPage() {
     return tasks.filter((task) => task.status === statusFilter)
   }, [statusFilter, tasks])
 
-    const totalPages = useMemo(
+  const totalPages = useMemo(
     () => Math.max(1, Math.ceil(filteredTasks.length / PAGE_SIZE)),
     [filteredTasks.length],
   )
