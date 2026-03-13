@@ -77,7 +77,10 @@ router.put('/tasks/:id', async (req, res) => {
 })
 
 router.delete('/tasks/:id', async (req, res) => {
-  const { error } = await supabase.from('tasks').delete().eq('id', req.params.id)
+  const { error } = await supabase
+    .from('tasks')
+    .delete()
+    .eq('id', req.params.id)
 
   if (error) {
     return res.status(400).json({ error: error.message })

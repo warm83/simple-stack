@@ -72,7 +72,8 @@ yarn dev:api
 ```bash
 yarn install
 yarn format:check
-yarn format  
+yarn format
 ```
+
 - `yarn format:check`: 変更せずにチェック
 - `yarn format`: 実際に適用

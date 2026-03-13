@@ -9,10 +9,7 @@ import { loginStyles } from './login.styles'
 export default function LoginPage() {
   return (
     <Box sx={loginStyles.page}>
-      <Paper
-        elevation={0}
-        sx={loginStyles.card}
-      >
+      <Paper elevation={0} sx={loginStyles.card}>
         <Stack spacing={2}>
           <Typography variant="h4">スタディログイン</Typography>
           <Typography variant="body2" color="text.secondary">

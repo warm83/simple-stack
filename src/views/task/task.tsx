@@ -39,8 +39,9 @@ export default function TasksPage() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const router = useRouter()
-  const { tasks, isLoading, error, addTask, updateTask, removeTask } = useTasks()
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom)
+  const { tasks, isLoading, error, addTask, updateTask, removeTask } =
+    useTasks()
 
   const filteredTasks = useMemo(() => {
     if (statusFilter === 'all') return tasks
@@ -64,7 +65,6 @@ export default function TasksPage() {
     const end = start + PAGE_SIZE
     return filteredTasks.slice(start, end)
   }, [filteredTasks, safeCurrentPage])
-
 
   const handleOpenDialog = () => {
     setEditingTask(null)
@@ -165,7 +165,12 @@ export default function TasksPage() {
             ))}
           </Stack>
         ) : (
-          <TaskTable tasks={tasksPage} onEdit={handleEdit} onDelete={handleOpenDeleteDialog} onOpen={handleOpenDetail} />
+          <TaskTable
+            tasks={tasksPage}
+            onEdit={handleEdit}
+            onDelete={handleOpenDeleteDialog}
+            onOpen={handleOpenDetail}
+          />
         )}
         <Stack direction="row" justifyContent="flex-end">
           <Pagination
@@ -188,7 +193,6 @@ export default function TasksPage() {
         onClose={handleCloseDeleteDialog}
         onDelete={handleDelete}
       />
-
     </AppLayout>
   )
 }
