@@ -21,7 +21,12 @@ type TaskTableProps = {
   onOpen: (taskId: string) => void
 }
 
-export default function TaskTable({ tasks, onEdit, onDelete, onOpen }: TaskTableProps) {
+export default function TaskTable({
+  tasks,
+  onEdit,
+  onDelete,
+  onOpen,
+}: TaskTableProps) {
   return (
     <TableContainer
       component={Paper}

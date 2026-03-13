@@ -9,12 +9,22 @@ type TaskFormDialogProps = {
   task?: Task | null
 }
 
-export default function TaskFormDialog({ open, onClose, onSubmit, task }: TaskFormDialogProps) {
+export default function TaskFormDialog({
+  open,
+  onClose,
+  onSubmit,
+  task,
+}: TaskFormDialogProps) {
   const formKey = `${task?.id ?? 'new'}-${open ? 'open' : 'closed'}`
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <TaskFormFields key={formKey} task={task} onClose={onClose} onSubmit={onSubmit} />
+      <TaskFormFields
+        key={formKey}
+        task={task}
+        onClose={onClose}
+        onSubmit={onSubmit}
+      />
     </Dialog>
   )
 }

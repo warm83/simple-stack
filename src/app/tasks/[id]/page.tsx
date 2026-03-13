@@ -6,7 +6,9 @@ type TaskDetailRoutePageProps = {
   params: Promise<{ id: string }>
 }
 
-export default async function TaskDetailRoutePage({ params }: TaskDetailRoutePageProps) {
+export default async function TaskDetailRoutePage({
+  params,
+}: TaskDetailRoutePageProps) {
   if (isMaintenanceMode()) return <MaintenancePage />
 
   const { id } = await params
