@@ -14,16 +14,37 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node.js
+        id: setup-node
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: Cache status
+        run: echo "setup-node cache-hit=${{ steps.setup-node.outputs.cache-hit }}"
 
       - name: Enable Corepack
         run: corepack enable
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Verify lockfile is unchanged
+        run: git diff --exit-code -- yarn.lock
+
+      - name: Verify yarn-only lockfile policy
+        run: |
+          if [ -f package-lock.json ] || [ -f pnpm-lock.yaml ]; then
+            echo "Only yarn.lock is allowed in this repository."
+            exit 1
+          fi
+
+      - name: Show yarn cache metadata
+        run: |
+          echo "node=$(node -v)"
+          echo "yarn=$(yarn -v)"
+          echo "cache_dir=$(yarn cache dir)"
 
       - name: Run Prettier check
         run: yarn format:check
