@@ -2,6 +2,8 @@
 
 ## 目的
 
+TEST2
+
 - タスク管理ボードの UI/UX と API 連携の学習・検証
 - ローカル API + Supabase を使った CRUD の確認
 
