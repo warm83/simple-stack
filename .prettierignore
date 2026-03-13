@@ -5,3 +5,8 @@ dist-ssr
 out
 *.local
 .github
+coverage
+*.tsbuildinfo
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
