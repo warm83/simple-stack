@@ -11,6 +11,7 @@ export const tasksAtom = atom<Task[]>([])
 export const tasksLoadingAtom = atom(true)
 export const tasksErrorAtom = atom<string | null>(null)
 export const tasksInitializedAtom = atom(false)
+export const currentPageAtom = atom(1)
 
 export const loadTasksAtom = atom(null, async (get, set) => {
   if (get(tasksInitializedAtom)) return

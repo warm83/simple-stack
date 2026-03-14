@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import ToggleButton from '@mui/material/ToggleButton'
@@ -18,6 +18,9 @@ import { useRouter } from 'next/navigation'
 import { useTasks } from '../../context/useTasks'
 import { taskStyles } from './task.styles'
 import DeleteDialog from '../../components/DeleteDialog'
+import { currentPageAtom } from '@/context/tasksAtoms'
+import { useAtom } from 'jotai'
+import { Pagination } from '@mui/material'
 
 const filterLabels: Record<TaskStatus | 'all', string> = {
   all: 'すべて',
@@ -25,6 +28,7 @@ const filterLabels: Record<TaskStatus | 'all', string> = {
   in_progress: '進行中',
   done: '完了',
 }
+const PAGE_SIZE = 20
 
 export default function TasksPage() {
   const [statusFilter, setStatusFilter] = useState<TaskStatus | 'all'>('all')
@@ -35,6 +39,7 @@ export default function TasksPage() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const router = useRouter()
+  const [currentPage, setCurrentPage] = useAtom(currentPageAtom)
   const { tasks, isLoading, error, addTask, updateTask, removeTask } =
     useTasks()
 
@@ -42,6 +47,24 @@ export default function TasksPage() {
     if (statusFilter === 'all') return tasks
     return tasks.filter((task) => task.status === statusFilter)
   }, [statusFilter, tasks])
+
+  const totalPages = useMemo(
+    () => Math.max(1, Math.ceil(filteredTasks.length / PAGE_SIZE)),
+    [filteredTasks.length],
+  )
+  const safeCurrentPage = Math.min(currentPage, totalPages)
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages)
+    }
+  }, [currentPage, totalPages, setCurrentPage])
+
+  const tasksPage = useMemo(() => {
+    const start = (safeCurrentPage - 1) * PAGE_SIZE
+    const end = start + PAGE_SIZE
+    return filteredTasks.slice(start, end)
+  }, [filteredTasks, safeCurrentPage])
 
   const handleOpenDialog = () => {
     setEditingTask(null)
@@ -88,6 +111,10 @@ export default function TasksPage() {
     setSelectedTask(null)
   }
 
+  const handlePage = (e: React.ChangeEvent<unknown>, page: number) => {
+    setCurrentPage(page)
+  }
+
   return (
     <AppLayout onAdd={handleOpenDialog}>
       <Stack spacing={3}>
@@ -100,7 +127,12 @@ export default function TasksPage() {
         <ToggleButtonGroup
           exclusive
           value={statusFilter}
-          onChange={(_event, value) => value && setStatusFilter(value)}
+          onChange={(_event, value) => {
+            if (value) {
+              setStatusFilter(value)
+              setCurrentPage(1)
+            }
+          }}
           sx={taskStyles.filterGroup}
         >
           {Object.entries(filterLabels).map(([value, label]) => (
@@ -122,7 +154,7 @@ export default function TasksPage() {
           <EmptyState onAdd={handleOpenDialog} />
         ) : isMobile ? (
           <Stack spacing={2}>
-            {filteredTasks.map((task) => (
+            {tasksPage.map((task) => (
               <TaskCard
                 key={task.id}
                 task={task}
@@ -134,12 +166,20 @@ export default function TasksPage() {
           </Stack>
         ) : (
           <TaskTable
-            tasks={filteredTasks}
+            tasks={tasksPage}
             onEdit={handleEdit}
             onDelete={handleOpenDeleteDialog}
             onOpen={handleOpenDetail}
           />
         )}
+        <Stack direction="row" justifyContent="flex-end">
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePage}
+            color="primary"
+          />
+        </Stack>
       </Stack>
       <TaskFormDialog
         open={dialogOpen}
