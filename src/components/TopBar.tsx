@@ -4,12 +4,15 @@ import Button from '@mui/material/Button'
 import Toolbar from '@mui/material/Toolbar'
 import AddIcon from '@mui/icons-material/Add'
 import { usePathname } from 'next/navigation'
+import { Stack } from '@mui/material'
+import { Download } from '@mui/icons-material'
 
 type TopBarProps = {
   onAdd: () => void
+  onDownloadCSV: () => void
 }
 
-export default function TopBar({ onAdd }: TopBarProps) {
+export default function TopBar({ onAdd, onDownloadCSV }: TopBarProps) {
   const pathname = usePathname()
   const isDetailPage = pathname.startsWith('/tasks/')
   return (
@@ -27,11 +30,26 @@ export default function TopBar({ onAdd }: TopBarProps) {
       <Toolbar sx={{ py: 1 }}>
         <Box sx={{ flexGrow: 1 }} />
         {!isDetailPage ? (
-          <Box>
-            <Button variant="contained" startIcon={<AddIcon />} onClick={onAdd}>
-              新しい課題
-            </Button>
-          </Box>
+          <Stack direction="row" spacing={2}>
+            <Box>
+              <Button
+                variant="outlined"
+                startIcon={<Download />}
+                onClick={onDownloadCSV}
+              >
+                CSVダウンロード
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                variant="contained"
+                startIcon={<AddIcon />}
+                onClick={onAdd}
+              >
+                新しい課題
+              </Button>
+            </Box>
+          </Stack>
         ) : null}
       </Toolbar>
     </AppBar>

@@ -8,9 +8,14 @@ import Stack from '@mui/material/Stack'
 type AppLayoutProps = {
   children: ReactNode
   onAdd: () => void
+  onDownloadCSV: () => void
 }
 
-export default function AppLayout({ children, onAdd }: AppLayoutProps) {
+export default function AppLayout({
+  children,
+  onAdd,
+  onDownloadCSV,
+}: AppLayoutProps) {
   return (
     <Box
       sx={{
@@ -21,7 +26,7 @@ export default function AppLayout({ children, onAdd }: AppLayoutProps) {
       <Stack direction="row">
         <SideBar />
         <Box sx={{ flexGrow: 1 }}>
-          <TopBar onAdd={onAdd} />
+          <TopBar onAdd={onAdd} onDownloadCSV={onDownloadCSV} />
           <Container sx={{ py: { xs: 3, md: 5 } }}>{children}</Container>
         </Box>
       </Stack>
