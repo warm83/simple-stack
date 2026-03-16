@@ -62,8 +62,11 @@ yarn dev:api
 - `GET /tasks`
 - `GET /tasks/:id`
 - `POST /tasks`
+- `POST /tasks/import`
 - `PUT /tasks/:id`
 - `DELETE /tasks/:id`
+
+`POST /tasks/import` は JSON で `{ "csv": "..." }` を受け取り、CSV ダウンロード機能と同じヘッダー (`ID, 課題, 説明, ステータス, 優先度, 担当者, 期限`) を想定して一括登録します。`ID` 列は読み飛ばします。
 
 `NEXT_PUBLIC_API_BASE_URL` を未設定の場合、プロダクションでは `/api` を自動で使用します。
 

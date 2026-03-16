@@ -1,14 +1,5 @@
+import type { ImportTasksResponse, ApiTask } from '../types/api'
 import type { Task, TaskInput } from '../types/task'
-
-type ApiTask = {
-  id: string
-  title: string
-  description: string
-  status: Task['status']
-  priority: Task['priority']
-  assignee: string
-  due_date: string | null
-}
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '/api'
 
@@ -86,4 +77,16 @@ export async function deleteTask(taskId: string) {
   await request<void>(`/tasks/${taskId}`, {
     method: 'DELETE',
   })
+}
+
+export async function importTasks(csv: string) {
+  const data = await request<ImportTasksResponse>('/tasks/import', {
+    method: 'POST',
+    body: JSON.stringify({ csv }),
+  })
+
+  return {
+    importedCount: data.importedCount,
+    tasks: data.tasks.map(mapApiToTask),
+  }
 }
