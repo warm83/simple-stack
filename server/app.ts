@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import { createClient } from '@supabase/supabase-js'
+import { parseTasksCsv } from './tasksCsv'
 
 dotenv.config()
 
@@ -59,6 +60,38 @@ router.post('/tasks', async (req, res) => {
   }
 
   return res.status(201).json(data)
+})
+
+router.post('/tasks/import', async (req, res) => {
+  const csv = req.body?.csv
+
+  if (typeof csv !== 'string' || csv.trim() === '') {
+    return res.status(400).json({ error: 'csv is required' })
+  }
+
+  let tasksToInsert
+
+  try {
+    tasksToInsert = parseTasksCsv(csv)
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : 'CSVの解析に失敗しました。'
+    return res.status(400).json({ error: message })
+  }
+
+  const { data, error } = await supabase
+    .from('tasks')
+    .insert(tasksToInsert)
+    .select('*')
+
+  if (error) {
+    return res.status(400).json({ error: error.message })
+  }
+
+  return res.status(201).json({
+    importedCount: data.length,
+    tasks: data,
+  })
 })
 
 router.put('/tasks/:id', async (req, res) => {
