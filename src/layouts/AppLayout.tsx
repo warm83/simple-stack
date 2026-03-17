@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack'
 type AppLayoutProps = {
   children: ReactNode
   onAdd: () => void
-  onDownloadCSV: () => void
+  onDownloadCSV?: () => void
 }
 
 export default function AppLayout({

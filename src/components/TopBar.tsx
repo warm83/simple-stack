@@ -9,7 +9,7 @@ import { Download } from '@mui/icons-material'
 
 type TopBarProps = {
   onAdd: () => void
-  onDownloadCSV: () => void
+  onDownloadCSV?: () => void
 }
 
 export default function TopBar({ onAdd, onDownloadCSV }: TopBarProps) {

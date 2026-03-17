@@ -30,10 +30,7 @@ export default function TaskDetailPage({ taskId }: TaskDetailPageProps) {
 
   if (isLoading) {
     return (
-      <AppLayout
-        onAdd={() => router.push('/')}
-        onDownloadCSV={() => router.push('/')}
-      >
+      <AppLayout onAdd={() => router.push('/')}>
         <Typography variant="h5">読み込み中...</Typography>
       </AppLayout>
     )
@@ -41,10 +38,7 @@ export default function TaskDetailPage({ taskId }: TaskDetailPageProps) {
 
   if (error) {
     return (
-      <AppLayout
-        onAdd={() => router.push('/')}
-        onDownloadCSV={() => router.push('/')}
-      >
+      <AppLayout onAdd={() => router.push('/')}>
         <Typography variant="h5">読み込みに失敗しました。</Typography>
       </AppLayout>
     )
@@ -52,10 +46,7 @@ export default function TaskDetailPage({ taskId }: TaskDetailPageProps) {
 
   if (!task) {
     return (
-      <AppLayout
-        onAdd={() => router.push('/')}
-        onDownloadCSV={() => router.push('/')}
-      >
+      <AppLayout onAdd={() => router.push('/')}>
         <Stack spacing={2}>
           <Typography variant="h4">課題が見つかりません。</Typography>
           <Button
@@ -71,10 +62,7 @@ export default function TaskDetailPage({ taskId }: TaskDetailPageProps) {
   }
 
   return (
-    <AppLayout
-      onAdd={() => router.push('/')}
-      onDownloadCSV={() => router.push('/')}
-    >
+    <AppLayout onAdd={() => router.push('/')}>
       <Stack spacing={3}>
         <Button
           variant="text"
