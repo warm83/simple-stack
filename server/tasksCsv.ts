@@ -10,7 +10,14 @@ type CsvTaskInsert = {
   due_date: string | null
 }
 
-const requiredHeaders = ['課題', '説明', 'ステータス', '優先度', '担当者', '期限']
+const requiredHeaders = [
+  '課題',
+  '説明',
+  'ステータス',
+  '優先度',
+  '担当者',
+  '期限',
+]
 
 const statusMap: Record<string, CsvTaskStatus> = {
   未着手: 'todo',
@@ -80,7 +87,11 @@ function normalizeHeader(header: string) {
   return header.trim().replace(/^\uFEFF/, '')
 }
 
-function requireValue(value: string | undefined, label: string, rowNumber: number) {
+function requireValue(
+  value: string | undefined,
+  label: string,
+  rowNumber: number,
+) {
   const normalized = value?.trim() ?? ''
   if (!normalized) {
     throw new Error(`${rowNumber}行目の「${label}」は必須です。`)
@@ -112,7 +123,9 @@ export function parseTasksCsv(csv: string): CsvTaskInsert[] {
   }
 
   const headers = rows[0].map(normalizeHeader)
-  const missingHeaders = requiredHeaders.filter((header) => !headers.includes(header))
+  const missingHeaders = requiredHeaders.filter(
+    (header) => !headers.includes(header),
+  )
 
   if (missingHeaders.length > 0) {
     throw new Error(`CSVヘッダーが不足しています: ${missingHeaders.join(', ')}`)
@@ -120,13 +133,21 @@ export function parseTasksCsv(csv: string): CsvTaskInsert[] {
 
   return rows.slice(1).map((row, index) => {
     const rowNumber = index + 2
-    const values = Object.fromEntries(headers.map((header, column) => [header, row[column] ?? '']))
+    const values = Object.fromEntries(
+      headers.map((header, column) => [header, row[column] ?? '']),
+    )
 
     return {
       title: requireValue(values['課題'], '課題', rowNumber),
       description: requireValue(values['説明'], '説明', rowNumber),
-      status: mapStatus(requireValue(values['ステータス'], 'ステータス', rowNumber), rowNumber),
-      priority: mapPriority(requireValue(values['優先度'], '優先度', rowNumber), rowNumber),
+      status: mapStatus(
+        requireValue(values['ステータス'], 'ステータス', rowNumber),
+        rowNumber,
+      ),
+      priority: mapPriority(
+        requireValue(values['優先度'], '優先度', rowNumber),
+        rowNumber,
+      ),
       assignee: requireValue(values['担当者'], '担当者', rowNumber),
       due_date: values['期限']?.trim() ? values['期限'].trim() : null,
     }
