@@ -21,6 +21,7 @@ import DeleteDialog from '../../components/DeleteDialog'
 import { currentPageAtom } from '@/context/tasksAtoms'
 import { useAtom } from 'jotai'
 import { Pagination } from '@mui/material'
+import { downloadTasksCSV } from '@/utils/downloadTasksCSV'
 
 const filterLabels: Record<TaskStatus | 'all', string> = {
   all: 'すべて',
@@ -28,6 +29,7 @@ const filterLabels: Record<TaskStatus | 'all', string> = {
   in_progress: '進行中',
   done: '完了',
 }
+
 const PAGE_SIZE = 20
 
 export default function TasksPage() {
@@ -114,9 +116,10 @@ export default function TasksPage() {
   const handlePage = (e: React.ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page)
   }
+  const handleDownloadCSV = () => downloadTasksCSV(filteredTasks)
 
   return (
-    <AppLayout onAdd={handleOpenDialog}>
+    <AppLayout onAdd={handleOpenDialog} onDownloadCSV={handleDownloadCSV}>
       <Stack spacing={3}>
         <Box>
           <Typography variant="h3">タスク</Typography>
