@@ -8,7 +8,36 @@ dotenv.config()
 
 const app = express()
 
-app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:3000' }))
+const corsOriginEnv = process.env.CORS_ORIGIN || 'http://localhost:3000'
+const allowedOrigins = corsOriginEnv
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean)
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow non-browser requests (curl, server-to-server)
+      if (!origin) return callback(null, true)
+
+      // Dev ergonomics: Next dev may auto-shift ports (3000 -> 3002, etc.)
+      // Allow any localhost/127.0.0.1 origin in non-production unless explicitly locked down.
+      if (
+        process.env.NODE_ENV !== 'production' &&
+        (origin.startsWith('http://localhost:') ||
+          origin.startsWith('http://127.0.0.1:'))
+      ) {
+        return callback(null, true)
+      }
+
+      if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+        return callback(null, true)
+      }
+
+      return callback(new Error(`CORS blocked for origin: ${origin}`))
+    },
+  }),
+)
 app.use(express.json())
 
 const supabase = createClient(
