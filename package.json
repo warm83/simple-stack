@@ -13,10 +13,12 @@
     "format:check": "prettier . --check"
   },
   "resolutions": {
+    "**/ajv": "^6.12.6",
     "eslint/minimatch": "^3.1.5",
     "eslint/@eslint/config-array/minimatch": "^3.1.5",
     "eslint/@eslint/eslintrc/minimatch": "^3.1.5",
-    "**/tinyglobby/picomatch": "^4.0.4"
+    "**/tinyglobby/picomatch": "^4.0.4",
+    "**/yaml": "^1.10.3"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -28,7 +30,7 @@
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "jotai": "^2.17.1",
-    "next": "^15.0.0",
+    "next": "^15.5.14",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
