@@ -12,6 +12,12 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check"
   },
+  "resolutions": {
+    "eslint/minimatch": "^3.1.5",
+    "eslint/@eslint/config-array/minimatch": "^3.1.5",
+    "eslint/@eslint/eslintrc/minimatch": "^3.1.5",
+    "**/tinyglobby/picomatch": "^4.0.4"
+  },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -39,6 +45,6 @@
     "prettier": "^3.8.1",
     "tsx": "^4.20.6",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.46.4"
+    "typescript-eslint": "^8.57.2"
   }
 }
