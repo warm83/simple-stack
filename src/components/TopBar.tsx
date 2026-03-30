@@ -8,13 +8,13 @@ import { Stack } from '@mui/material'
 import { Download } from '@mui/icons-material'
 
 type TopBarProps = {
-  onAdd: () => void
+  onAdd?: () => void
   onDownloadCSV?: () => void
 }
 
 export default function TopBar({ onAdd, onDownloadCSV }: TopBarProps) {
   const pathname = usePathname()
-  const isDetailPage = pathname.startsWith('/tasks/')
+  const isTaskPage = pathname == '/'
   return (
     <AppBar
       position="sticky"
@@ -29,7 +29,7 @@ export default function TopBar({ onAdd, onDownloadCSV }: TopBarProps) {
     >
       <Toolbar sx={{ py: 1 }}>
         <Box sx={{ flexGrow: 1 }} />
-        {!isDetailPage ? (
+        {isTaskPage ? (
           <Stack direction="row" spacing={2}>
             <Box>
               <Button
