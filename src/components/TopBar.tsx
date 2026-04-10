@@ -14,7 +14,7 @@ type TopBarProps = {
 
 export default function TopBar({ onAdd, onDownloadCSV }: TopBarProps) {
   const pathname = usePathname()
-  const isTaskPage = pathname == '/'
+  const isTaskPage = pathname === '/'
   return (
     <AppBar
       position="sticky"

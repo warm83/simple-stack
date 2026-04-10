@@ -15,13 +15,13 @@ const statusLabels: Record<
   TaskStatus | 'all',
   {
     label: string
-    color: keyof Palette | 'text.secondary' | 'default'
+    color: keyof Palette | 'text.secondary' | 'text.primary'
     borderColor: string
   }
 > = {
   all: {
     label: '合計',
-    color: 'default',
+    color: 'text.primary',
     borderColor: alpha(theme.palette.text.primary, 0.2),
   },
   todo: {
@@ -62,7 +62,7 @@ export default function StatusCountCard({ tasks }: { tasks: Task[] }) {
             variant="outlined"
             sx={{
               borderColor: value.borderColor,
-              backgroundColor: '#ffffff',
+              backgroundColor: 'background.paper',
               flex: 1,
             }}
           >

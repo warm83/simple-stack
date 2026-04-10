@@ -9,7 +9,14 @@ import {
   Typography,
 } from '@mui/material'
 import { useMemo } from 'react'
+
 const UPCOMING_DAYS = 7
+const formatDiffDays = (days: number) => {
+  if (days === 0) return '今日'
+  if (days === 1) return '明日'
+  return days + '日後'
+}
+
 export default function DuedateSection({ tasks }: { tasks: Task[] }) {
   const { expiredTasks, upcomingTasks } = useMemo(() => {
     const today = new Date()
@@ -38,11 +45,6 @@ export default function DuedateSection({ tasks }: { tasks: Task[] }) {
     return { expiredTasks, upcomingTasks }
   }, [tasks])
 
-  const formatDiffDays = (days: number) => {
-    if (days === 0) return '今日'
-    if (days === 1) return '明日'
-    return days + '日後'
-  }
   return (
     <Stack spacing={3}>
       <Box sx={dashboardStyles.card}>
