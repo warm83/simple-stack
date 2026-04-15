@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 const menuItems = [
   { title: 'タスク一覧', url: '/' },
   { title: 'ログイン', url: '/login' },
+  { title: 'ダッシュボード', url: '/dashboard' },
 ]
 
 export default function SideBar() {
