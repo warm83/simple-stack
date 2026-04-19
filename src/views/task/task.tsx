@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type ChangeEvent } from 'react'
+import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import ToggleButton from '@mui/material/ToggleButton'
@@ -18,10 +19,12 @@ import { useRouter } from 'next/navigation'
 import { useTasks } from '../../context/useTasks'
 import { taskStyles } from './task.styles'
 import DeleteDialog from '../../components/DeleteDialog'
-import { currentPageAtom } from '@/context/tasksAtoms'
-import { useAtom } from 'jotai'
+import { currentPageAtom, tasksAtom } from '@/context/tasksAtoms'
+import { useAtom, useSetAtom } from 'jotai'
 import { Pagination } from '@mui/material'
 import { downloadTasksCSV } from '@/utils/downloadTasksCSV'
+import { fetchTasks } from '@/api/tasks'
+import { importTasksCSV } from '@/utils/importTasksCSV'
 
 const filterLabels: Record<TaskStatus | 'all', string> = {
   all: 'すべて',
@@ -38,10 +41,15 @@ export default function TasksPage() {
   const [editingTask, setEditingTask] = useState<Task | null>(null)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+  const [importState, setImportState] = useState<
+    'loading' | 'success' | 'error' | null
+  >(null)
+  const [importMessage, setImportMessage] = useState<string | null>(null)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const router = useRouter()
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom)
+  const setTasks = useSetAtom(tasksAtom)
   const { tasks, isLoading, error, addTask, updateTask, removeTask } =
     useTasks()
 
@@ -113,13 +121,42 @@ export default function TasksPage() {
     setSelectedTask(null)
   }
 
-  const handlePage = (e: React.ChangeEvent<unknown>, page: number) => {
+  const handlePage = (_event: ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page)
   }
   const handleDownloadCSV = () => downloadTasksCSV(filteredTasks)
 
+  const handleImportCSV = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file || importState === 'loading') return
+    event.target.value = ''
+
+    setImportState('loading')
+    setImportMessage('CSVを取り込んでいます。')
+
+    try {
+      const result = await importTasksCSV(file)
+      const data = await fetchTasks()
+      setTasks(data)
+      setStatusFilter('all')
+      setCurrentPage(1)
+      setImportState('success')
+      setImportMessage(`${result.importedCount}件のタスクを取り込みました。`)
+    } catch (err) {
+      setImportState('error')
+      setImportMessage(
+        err instanceof Error ? err.message : 'CSVのインポートに失敗しました',
+      )
+    }
+  }
+
   return (
-    <AppLayout onAdd={handleOpenDialog} onDownloadCSV={handleDownloadCSV}>
+    <AppLayout
+      onAdd={handleOpenDialog}
+      onDownloadCSV={handleDownloadCSV}
+      onImportCSV={handleImportCSV}
+      importLoading={importState === 'loading'}
+    >
       <Stack spacing={3}>
         <Box>
           <Typography variant="h3">タスク</Typography>
@@ -127,6 +164,19 @@ export default function TasksPage() {
             チーム課題の進捗をひと目で確認しましょう。
           </Typography>
         </Box>
+        {importState && importMessage ? (
+          <Alert
+            severity={
+              importState === 'success'
+                ? 'success'
+                : importState === 'error'
+                  ? 'error'
+                  : 'info'
+            }
+          >
+            {importMessage}
+          </Alert>
+        ) : null}
         <ToggleButtonGroup
           exclusive
           value={statusFilter}

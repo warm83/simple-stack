@@ -1,20 +1,31 @@
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
 import Toolbar from '@mui/material/Toolbar'
 import AddIcon from '@mui/icons-material/Add'
 import { usePathname } from 'next/navigation'
 import { Stack } from '@mui/material'
-import { Download } from '@mui/icons-material'
+import { Download, UploadFile } from '@mui/icons-material'
+import { useRef, type ChangeEvent } from 'react'
 
 type TopBarProps = {
   onAdd?: () => void
   onDownloadCSV?: () => void
+  onImportCSV?: (event: ChangeEvent<HTMLInputElement>) => void
+  importLoading?: boolean
 }
 
-export default function TopBar({ onAdd, onDownloadCSV }: TopBarProps) {
+export default function TopBar({
+  onAdd,
+  onDownloadCSV,
+  onImportCSV,
+  importLoading = false,
+}: TopBarProps) {
   const pathname = usePathname()
   const isTaskPage = pathname === '/'
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   return (
     <AppBar
       position="sticky"
@@ -31,6 +42,30 @@ export default function TopBar({ onAdd, onDownloadCSV }: TopBarProps) {
         <Box sx={{ flexGrow: 1 }} />
         {isTaskPage ? (
           <Stack direction="row" spacing={2}>
+            <Box>
+              <Button
+                variant="outlined"
+                startIcon={
+                  importLoading ? (
+                    <CircularProgress size={18} color="inherit" />
+                  ) : (
+                    <UploadFile />
+                  )
+                }
+                onClick={() => fileInputRef.current?.click()}
+                disabled={importLoading}
+              >
+                CSVインポート
+              </Button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".csv,text/csv"
+                onChange={onImportCSV}
+                disabled={importLoading}
+                style={{ display: 'none' }}
+              />
+            </Box>
             <Box>
               <Button
                 variant="outlined"
