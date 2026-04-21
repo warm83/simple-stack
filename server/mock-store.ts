@@ -72,7 +72,10 @@ function sortTasks(tasks: MockTaskRecord[]) {
   })
 }
 
-function createRecord(input: MockTaskInsert, timestamp: string): MockTaskRecord {
+function createRecord(
+  input: MockTaskInsert,
+  timestamp: string,
+): MockTaskRecord {
   return {
     id: randomUUID(),
     title: input.title,
@@ -90,8 +93,9 @@ export function createMockStore(initialTasks: MockTaskInsert[] = seedTasks) {
   let sequence = initialTasks.length
   let tasks = sortTasks(
     initialTasks.map((task, index) => {
-      const createdAt = new Date(Date.now() - (initialTasks.length - index) * 60000)
-        .toISOString()
+      const createdAt = new Date(
+        Date.now() - (initialTasks.length - index) * 60000,
+      ).toISOString()
       return createRecord(task, createdAt)
     }),
   )
@@ -132,7 +136,9 @@ export function createMockStore(initialTasks: MockTaskInsert[] = seedTasks) {
         updated_at: new Date().toISOString(),
       }
 
-      tasks = tasks.map((item, itemIndex) => (itemIndex === index ? nextTask : item))
+      tasks = tasks.map((item, itemIndex) =>
+        itemIndex === index ? nextTask : item,
+      )
       return cloneTask(nextTask)
     },
     delete(id: string) {
