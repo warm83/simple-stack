@@ -7,7 +7,7 @@ import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import { alpha, useTheme } from '@mui/material/styles'
 import AppLayout from '../../layouts/AppLayout'
 import EmptyState from '../../components/EmptyState'
 import TaskFormDialog from '../../components/TaskFormDialog'
@@ -18,10 +18,18 @@ import { useRouter } from 'next/navigation'
 import { useTasks } from '../../context/useTasks'
 import { taskStyles } from './task.styles'
 import DeleteDialog from '../../components/DeleteDialog'
-import { currentPageAtom } from '@/context/tasksAtoms'
-import { useAtom } from 'jotai'
+import { currentPageAtom, tasksAtom } from '@/context/tasksAtoms'
+import { useAtom, useSetAtom } from 'jotai'
 import { Pagination } from '@mui/material'
 import { downloadTasksCSV } from '@/utils/downloadTasksCSV'
+import { importTasksCSV } from '@/utils/importTasksCSV'
+import { fetchTasks } from '@/api/tasks'
+import {
+  AutorenewOutlined,
+  CheckCircleOutline,
+  ErrorOutlineOutlined,
+} from '@mui/icons-material'
+import theme from '@/theme'
 
 const filterLabels: Record<TaskStatus | 'all', string> = {
   all: 'すべて',
@@ -30,6 +38,25 @@ const filterLabels: Record<TaskStatus | 'all', string> = {
   done: '完了',
 }
 
+const importStatus = {
+  loading: {
+    bgColor: alpha(theme.palette.text.secondary, 0.1),
+    textColor: 'text.secondary',
+    icon: (
+      <AutorenewOutlined fontSize="small" sx={{ color: 'text.secondary' }} />
+    ),
+  },
+  success: {
+    bgColor: alpha(theme.palette.success.main, 0.1),
+    textColor: 'success.dark',
+    icon: <CheckCircleOutline fontSize="small" color="success" />,
+  },
+  error: {
+    bgColor: alpha(theme.palette.error.main, 0.1),
+    textColor: 'error.dark',
+    icon: <ErrorOutlineOutlined fontSize="small" color="error" />,
+  },
+}
 const PAGE_SIZE = 20
 
 export default function TasksPage() {
@@ -38,10 +65,15 @@ export default function TasksPage() {
   const [editingTask, setEditingTask] = useState<Task | null>(null)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+  const [importState, setImportState] = useState<
+    'loading' | 'success' | 'error' | null
+  >(null)
+  const [importMessage, setImportMessage] = useState<string | null>(null)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const router = useRouter()
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom)
+  const setTasks = useSetAtom(tasksAtom)
   const { tasks, isLoading, error, addTask, updateTask, removeTask } =
     useTasks()
 
@@ -117,9 +149,48 @@ export default function TasksPage() {
     setCurrentPage(page)
   }
   const handleDownloadCSV = () => downloadTasksCSV(filteredTasks)
+  const isImporting = importState === 'loading'
+
+  const handleImportCSV = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (isImporting) return
+
+    const file = event.target.files?.[0]
+    if (!file) return
+    event.target.value = ''
+
+    setImportState('loading')
+    setImportMessage('import 実行中です。')
+    try {
+      const result = await importTasksCSV(file)
+      setImportState('success')
+      setImportMessage(`${result.importedCount}件のタスクを取り込みました。`)
+
+      try {
+        const data = await fetchTasks()
+        setTasks(data)
+      } catch {
+        setTasks((prev) => [...result.tasks, ...prev])
+        setImportMessage(
+          `${result.importedCount}件のタスクを取り込みました。一覧の再取得に失敗したため、表示は一時的な反映です。`,
+        )
+      }
+    } catch (err) {
+      setImportState('error')
+      setImportMessage(
+        err instanceof Error ? err.message : 'CSVのインポートに失敗しました',
+      )
+    }
+  }
 
   return (
-    <AppLayout onAdd={handleOpenDialog} onDownloadCSV={handleDownloadCSV}>
+    <AppLayout
+      onAdd={handleOpenDialog}
+      onDownloadCSV={handleDownloadCSV}
+      onImportCSV={handleImportCSV}
+      importDisabled={isImporting}
+    >
       <Stack spacing={3}>
         <Box>
           <Typography variant="h3">タスク</Typography>
@@ -127,6 +198,26 @@ export default function TasksPage() {
             チーム課題の進捗をひと目で確認しましょう。
           </Typography>
         </Box>
+        {importState ? (
+          <Box
+            sx={{
+              backgroundColor: importStatus[importState].bgColor,
+              borderRadius: 2,
+            }}
+            p={1}
+          >
+            <Stack direction="row" alignItems="center" spacing={0.5}>
+              {importStatus[importState].icon}
+              <Typography
+                variant="body2"
+                color={importStatus[importState].textColor}
+              >
+                {importMessage}
+              </Typography>
+            </Stack>
+          </Box>
+        ) : null}
+
         <ToggleButtonGroup
           exclusive
           value={statusFilter}

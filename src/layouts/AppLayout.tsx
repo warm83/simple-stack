@@ -9,12 +9,16 @@ type AppLayoutProps = {
   children: ReactNode
   onAdd?: () => void
   onDownloadCSV?: () => void
+  onImportCSV?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  importDisabled?: boolean
 }
 
 export default function AppLayout({
   children,
   onAdd,
   onDownloadCSV,
+  onImportCSV,
+  importDisabled,
 }: AppLayoutProps) {
   return (
     <Box
@@ -26,7 +30,12 @@ export default function AppLayout({
       <Stack direction="row">
         <SideBar />
         <Box sx={{ flexGrow: 1 }}>
-          <TopBar onAdd={onAdd} onDownloadCSV={onDownloadCSV} />
+          <TopBar
+            onAdd={onAdd}
+            onDownloadCSV={onDownloadCSV}
+            onImportCSV={onImportCSV}
+            importDisabled={importDisabled}
+          />
           <Container sx={{ py: { xs: 3, md: 5 } }}>{children}</Container>
         </Box>
       </Stack>
