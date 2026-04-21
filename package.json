@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:api": "tsx server/index.ts",
+    "dev:mock": "tsx server/mock-index.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
