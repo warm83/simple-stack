@@ -20,6 +20,10 @@ Next.js App Router、TypeScript、MUI で構築したタスク管理ボードで
 - Express
 - Supabase
 
+## アーキテクチャ
+
+![Simple Stack Architecture](docs/simple-stack-architecture-en.png)
+
 ## 画面
 
 | パス         | 内容                            |
