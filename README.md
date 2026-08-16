@@ -58,17 +58,49 @@ yarn dev
 
 ### Supabase を使う
 
-Supabase に `tasks` テーブルを用意し、`.env` に接続情報を設定してから API とフロントエンドを起動します。API が利用するカラムは次のとおりです。
+Supabase Dashboard の SQL Editor で次のクエリを実行し、API が利用する `tasks` テーブルを作成します。既存の同名テーブルがある場合は、先にスキーマとデータを確認してから個別にマイグレーションしてください。
 
-- `id`
-- `title`
-- `description`
-- `status` (`todo` / `in_progress` / `done`)
-- `priority` (`low` / `medium` / `high`)
-- `assignee`
-- `due_date`
-- `created_at`
-- `updated_at`
+```sql
+create table public.tasks (
+  id uuid primary key default gen_random_uuid(),
+  title text not null check (btrim(title) <> ''),
+  description text not null check (btrim(description) <> ''),
+  status text not null default 'todo'
+    check (status in ('todo', 'in_progress', 'done')),
+  priority text not null default 'medium'
+    check (priority in ('low', 'medium', 'high')),
+  assignee text not null check (btrim(assignee) <> ''),
+  due_date date,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index tasks_created_at_idx
+  on public.tasks (created_at desc, id desc);
+```
+
+このアプリはブラウザから Supabase を直接呼び出さず、Express API がサーバー専用の `service_role` key を使ってアクセスします。続けて次のクエリを実行し、RLS を有効化したうえで `anon` と `authenticated` からテーブル権限を削除します。
+
+```sql
+alter table public.tasks enable row level security;
+
+revoke all privileges on table public.tasks
+  from public, anon, authenticated;
+
+grant select, insert, update, delete on table public.tasks
+  to service_role;
+```
+
+この構成では RLS Policy を意図的に作成しません。`anon` と `authenticated` はテーブル権限も Policy も持たず、`service_role` を使うサーバー API だけが CRUD を実行できます。将来 Supabase Auth を導入してブラウザから直接アクセスする場合は、ユーザー単位の Policy と必要最小限の権限を別途追加してください。
+
+設定後、`.env` に接続情報を記述します。`SUPABASE_SERVICE_ROLE_KEY` は RLS を迂回できるため、ブラウザへ公開せずサーバー環境だけに設定してください。
+
+```dotenv
+SUPABASE_URL=https://your-project-ref.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
+
+参考: [Row Level Security](https://supabase.com/docs/guides/database/postgres/row-level-security)、[Securing your API](https://supabase.com/docs/guides/api/securing-your-api)
 
 ```bash
 # Terminal 1
